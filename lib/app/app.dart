@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cashflow/app/utils/theme/theme.dart';
+import 'package:cashflow/app/features/theming/theme.dart';
 
 class CashFlow extends StatelessWidget {
   const CashFlow({super.key});

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:cashflow/app/utils/theme/custom_themes/text_theme.dart';
-import 'package:cashflow/app/utils/theme/custom_themes/text_field_theme.dart';
-import 'package:cashflow/app/utils/theme/custom_themes/elevated_button_theme.dart';
-import 'package:cashflow/app/utils/theme/custom_themes/appbar_theme.dart';
+import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
+import 'package:cashflow/app/features/theming/themes/cash_flow_text_theme.dart';
 
 class CashFlowTheme {
   static ThemeData lightTheme = ThemeData(
