@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cashflow/app/features/theming/theme.dart';
+import 'package:cashflow/app/features/authentication/login/login_page.dart';
 
 class CashFlow extends StatelessWidget {
   const CashFlow({super.key});
@@ -10,6 +11,8 @@ class CashFlow extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: CashFlowTheme.lightTheme,
       darkTheme: CashFlowTheme.darkTheme,
+      debugShowCheckedModeBanner: false,
+      home: CashFlowLoginScreen(), 
     );
   }
 }
