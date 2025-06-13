@@ -109,6 +109,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                       labelText: "E-mail",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       prefixIcon: Icon(Iconsax.direct_right, color: CashFlowColors.textSecondaryColor),
+                      floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -144,6 +145,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                     decoration: InputDecoration(
                       labelText: "Senha",
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
+                      floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       prefixIcon: const Icon(Iconsax.password_check, color: CashFlowColors.textSecondaryColor),
 
                       // Botão para alternar visibilidade da senha
