@@ -1,8 +1,7 @@
-import 'package:cashflow/app/features/constants/styling.dart';
-import 'package:cashflow/app/features/expenses/expenses_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cashflow/app/features/constants/styling.dart';
 import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 /* 
   Melhorias/ToDos:
@@ -25,10 +24,10 @@ class CashFlowNewExpenseScreen extends StatefulWidget {
 
 // Enum que representa os tipos de pagamento (feito para conversar com o backend .NET)
 enum PaymentType {
-  cash(0, 'Dinheiro', Iconsax.money),
-  creditCard(1, 'Cartão de Crédito', Iconsax.card),
-  debitCard(2, 'Cartão de Débito', Iconsax.card),
-  electronicTransfer(3, 'Transferência', Iconsax.money_send);
+  cash(0, 'Dinheiro', Icons.money_rounded),
+  creditCard(1, 'Cartão de Crédito', Icons.credit_card),
+  debitCard(2, 'Cartão de Débito', Icons.credit_card),
+  electronicTransfer(3, 'Transferência', Icons.send);
 
   final int value; // Valor numérico p/ consumo pela API
   final String description;
@@ -37,14 +36,13 @@ enum PaymentType {
   const PaymentType(this.value, this.description, this.icon);
 }
 
-PaymentType? _selectedPaymentType;
-
 class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
   // Chave para controle e validação do formulário
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _valueController = TextEditingController();
+  PaymentType? _selectedPaymentType;
   
   @override
   void dispose() {
@@ -57,8 +55,6 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar(
@@ -69,9 +65,9 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
           children: [
             Text(
               "Olá, Felipe",
-              style: theme.textTheme.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: CashFlowColors.textWhiteColor,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold
               ),
             ),
           ],
@@ -80,7 +76,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Iconsax.profile_circle, color: Colors.white),
+            icon: const Icon(Icons.account_circle, color: Colors.white),
             onPressed: () {}, // ToDo -> implementar navegação para tela de perfil (alterar e-mail e/ou senha)
           ),
         ],
@@ -94,10 +90,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
             SizedBox(
               child: TextButton(
                 onPressed: () {
-                  Navigator.push( // Navegação p/ tela anterior
-                    context,
-                    MaterialPageRoute(builder: (context) => const CashFlowExpensesScreen()),
-                  );
+                  context.pop(); // Navegação -> Go Router
                 },
                 child: Text(
                   "Voltar",
@@ -113,16 +106,17 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
 
             Text(
               "Adicionar despesa",
-              style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: CashFlowColors.textPrimaryColor,
+                fontWeight: FontWeight.bold
               ),
             ),
 
             Text(
               "Adicione uma nova despesa",
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
+                fontWeight: FontWeight.bold
               ),
             ),
 
@@ -141,7 +135,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                       labelText: "Título",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.textalign_left, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.title, color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -173,7 +167,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                       labelText: "Descrição",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.note_text, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.description, color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -204,7 +198,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                       labelText: "Valor (R\$)",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.money, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.attach_money_rounded, color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -296,7 +290,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Despesa adicionada com sucesso!')),
                           );
-                          Navigator.pop(context);
+                          context.go('/expenses'); // Navegação -> Go Router
                         }
                       },
                       style: ElevatedButton.styleFrom(

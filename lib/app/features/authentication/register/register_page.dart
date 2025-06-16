@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cashflow/app/features/constants/styling.dart';
 import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 /* 
   Melhorias/ToDos:
@@ -50,8 +50,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
   // Método principal de construção da interface
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Pega o ThemeData do contexto da página
-
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar(
@@ -83,18 +81,17 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
             // Título
             Text(
               "Crie sua conta",
-              style: theme.textTheme.headlineMedium?.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: CashFlowColors.textPrimaryColor,
-                fontWeight: FontWeight.bold,
               ),
             ),
 
-            const SizedBox(height: CashFlowSizes.normalSpacing),
+            const SizedBox(height: CashFlowSizes.smallSpacing),
 
             // Subtítulo
             Text(
               "Preencha os campos para criar sua conta",
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
               ),
             ),
@@ -116,7 +113,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelText: "Nome completo",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.user, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.person, color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -150,7 +147,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelText: "E-mail",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.direct_right, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.mail, color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
@@ -186,11 +183,11 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelText: "Senha",
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: const Icon(Iconsax.password_check, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
 
                       suffixIcon: IconButton( // Botão para alternar visibilidade da senha
                         icon: Icon(
-                          _obscurePassword ? Iconsax.eye_slash : Iconsax.eye,
+                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
                           color: CashFlowColors.textSecondaryColor,
                         ),
                         onPressed: () {
@@ -235,11 +232,11 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelText: "Confirmar senha",
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: const Icon(Iconsax.password_check, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
 
                       suffixIcon: IconButton( // Botão para alternar visibilidade da senha
                         icon: Icon(
-                          _obscureConfirmPassword ? Iconsax.eye_slash : Iconsax.eye,
+                          _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
                           color: CashFlowColors.textSecondaryColor,
                         ),
                         onPressed: () {
@@ -281,10 +278,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) { // Simulação de cadastro - teste (tirar depois)
-                          print('Registro com:');
-                          print('Nome: ${_nameController.text}');
-                          print('E-mail: ${_emailController.text}');
-                          print('Senha: ${_passwordController.text}');
+                          context.go('/expenses'); // Navegação -> Go Router
                         }
                       },
 
@@ -307,7 +301,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        context.pop(); // Navegação -> Go Router
                       },
 
                       child: Text(

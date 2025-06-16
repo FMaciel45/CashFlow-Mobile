@@ -1,8 +1,7 @@
-import 'package:cashflow/app/features/authentication/register/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cashflow/app/features/constants/styling.dart';
 import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 /* 
   Melhorias/ToDos:
@@ -46,8 +45,6 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
   // Método principal de construção da interface
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Obtém o tema atual da página para manter consistência visual
-    
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar( // Barra superior do app
@@ -76,18 +73,17 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
             // Título
             Text(
               "Bem-vindo(a) de volta",
-              style: theme.textTheme.headlineMedium?.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: CashFlowColors.textPrimaryColor,
-                fontWeight: FontWeight.bold,
               ),
             ),
 
-            const SizedBox(height: CashFlowSizes.normalSpacing), // Espaçamento (margin?)
+            const SizedBox(height: CashFlowSizes.smallSpacing), // Espaçamento (margin?)
 
             // Subtítulo
             Text(
               "Faça login para continuar usando o CashFlow",
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
               ),
             ),
@@ -108,7 +104,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                     decoration: const InputDecoration(
                       labelText: "E-mail",
                       labelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: Icon(Iconsax.direct_right, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: Icon(Icons.mail, color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
@@ -146,12 +142,12 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                       labelText: "Senha",
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
-                      prefixIcon: const Icon(Iconsax.password_check, color: CashFlowColors.textSecondaryColor),
+                      prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
 
                       // Botão para alternar visibilidade da senha
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Iconsax.eye_slash : Iconsax.eye,
+                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
                           color: CashFlowColors.textSecondaryColor,
                         ),
                         onPressed: () {
@@ -189,9 +185,9 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                   SizedBox(
                     width: double.infinity, // Ocupa toda a largura
                     child: ElevatedButton(
-                      onPressed: () { // Valida o formulário quando pressionado
-                        if (_formKey.currentState!.validate()) { // Testar o retorno do login - tirar depois
-                          print('Login com: ${_emailController.text} / ${_passwordController.text}'); 
+                      onPressed: () { 
+                        if (_formKey.currentState!.validate()) { // Valida o formulário quando pressionado
+                          context.go('/expenses'); // Navegação -> Go Router
                         }
                       },
 
@@ -214,10 +210,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push( // Navegação p/ tela de registro
-                          context,
-                          MaterialPageRoute(builder: (context) => const CashFlowRegisterScreen()),
-                        );
+                        context.push('/register'); // Navegação -> Go Router
                       },
 
                       child: Text(
