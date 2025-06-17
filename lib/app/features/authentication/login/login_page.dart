@@ -1,6 +1,6 @@
+import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:cashflow/app/features/constants/styling.dart';
-import 'package:cashflow/app/features/theming/themes/cash_flow_themes.dart';
 import 'package:go_router/go_router.dart';
 
 /* 
@@ -45,19 +45,18 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
   // Método principal de construção da interface
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final appBarTheme = TAppBarTheme.lightAppBarTheme;
+
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar( // Barra superior do app
+        backgroundColor: appBarTheme.backgroundColor,
         centerTitle: true,
-        title: const Text(
-          "CashFlow",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: CashFlowColors.textWhiteColor,
-          ),
+        title: Text(
+          "CashFlow"
         ),
-        backgroundColor: CashFlowColors.primaryColor,
-        elevation: 0, // Remove a sombra do AppBar
       ),
 
       body: SingleChildScrollView(
@@ -65,16 +64,14 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
           horizontal: CashFlowSizes.mediumPadding,
           vertical: CashFlowSizes.largePadding,
         ),
-
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, // Alinhamento à esquerda
           children: [
-
             // Título
             Text(
               "Bem-vindo(a) de volta",
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: CashFlowColors.textPrimaryColor,
+              style: textTheme.headlineMedium?.copyWith(
+                color: CashFlowColors.textPrimaryColor
               ),
             ),
 
@@ -83,7 +80,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
             // Subtítulo
             Text(
               "Faça login para continuar usando o CashFlow",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
               ),
             ),
@@ -95,7 +92,6 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
               key: _formKey, // Chave para controle do formulário
               child: Column(
                 children: [
-
                   // Campo de e-mail
                   TextFormField(
                     controller: _emailController,
@@ -109,11 +105,9 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -143,7 +137,6 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
-
                       // Botão para alternar visibilidade da senha
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -156,15 +149,12 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                           });
                         },
                       ),
-
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -181,7 +171,7 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
 
                   const SizedBox(height: CashFlowSizes.largeSpacing),
 
-                  // Botão de login
+                  // Botão de "entrar"
                   SizedBox(
                     width: double.infinity, // Ocupa toda a largura
                     child: ElevatedButton(
@@ -190,7 +180,6 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                           context.go('/expenses'); // Navegação -> Go Router
                         }
                       },
-
                       style: ElevatedButton.styleFrom(
                         backgroundColor: CashFlowColors.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -198,12 +187,11 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-
                       child: const Text("Entrar"),
                     ),
                   ),
 
-                  const SizedBox(height: CashFlowSizes.normalSpacing),
+                  const SizedBox(height: CashFlowSizes.smallSpacing),
 
                   // Link p/ tela de registro
                   SizedBox(
@@ -212,13 +200,12 @@ class _CashFlowLoginScreenState extends State<CashFlowLoginScreen> {
                       onPressed: () {
                         context.push('/register'); // Navegação -> Go Router
                       },
-
                       child: Text(
                         "Não possui uma conta? Cadastre-se",
-                        style: TextStyle(
+                        style: textTheme.bodySmall?.copyWith(
                           color: CashFlowColors.primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          fontWeight: FontWeight.bold
+                        )
                       ),
                     ),
                   ),

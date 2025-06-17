@@ -10,7 +10,6 @@ class CashFlowColors {
   static const Color textWhiteColor = Colors.white;
   static const Color textWhiteColorWithLessOpacity = Color.fromARGB(204, 255, 255, 255);
 
-
   static const Color lightTheme = Color.fromARGB(255, 246, 246, 246);
   static const Color darkTheme = Color.fromARGB(255, 39, 39, 39);
   static const Color primaryBackgroundColor = Color.fromARGB(255, 243, 245, 255);
@@ -29,25 +28,36 @@ class CashFlowColors {
   static const Color warningColor = Color.fromARGB(255, 245, 124, 0);
 } 
 
+class TDividerTheme {
+  static const lightDivider = Divider(
+    height: 24,
+    thickness: 1,
+    color: CashFlowColors.dividerColor,
+  );
+
+  static const darkDivider = Divider(
+    height: 24,
+    thickness: 1,
+    color: CashFlowColors.dividerColor, // definir depois uma cor pro divider em dark mode 
+    indent: 16,
+    endIndent: 16,
+  );
+}
+
 class TAppBarTheme {
   static const lightAppBarTheme = AppBarTheme(
     elevation: 0,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
-    surfaceTintColor: Colors.transparent,
+    backgroundColor: CashFlowColors.primaryColor,
     iconTheme: IconThemeData(
-      color: Colors.black, 
-      size: 24
-    ),
-    actionsIconTheme: IconThemeData(
-      color: Colors.black,
+      color: CashFlowColors.textWhiteColor, 
       size: 24
     ),
     titleTextStyle: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
-      color: Colors.black
+      color: CashFlowColors.textWhiteColor
     )
   );
 

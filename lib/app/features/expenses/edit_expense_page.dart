@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 /* 
   Melhorias/ToDos:
-  - Integrar c/ API (.NET) 
+  - Integrar c/ API (.NET) para buscar e atualizar a despesa
   - Separar responsabilidades
   - Refatorar o que puder 
   - Implementar light/dark theme
@@ -15,28 +15,42 @@ import 'package:go_router/go_router.dart';
   - Testes -> widgets e integração
 */
 
-class CashFlowNewExpenseScreen extends StatefulWidget {
-  const CashFlowNewExpenseScreen({super.key});
+class CashFlowEditExpenseScreen extends StatefulWidget {
+  final String expenseId; // ID da despesa que será editada
+  
+  const CashFlowEditExpenseScreen({
+    super.key,
+    required this.expenseId,
+  });
 
   @override
-  State<CashFlowNewExpenseScreen> createState() => _CashFlowNewExpenseScreenState();
+  State<CashFlowEditExpenseScreen> createState() => _CashFlowEditExpenseScreenState();
 }
 
-// Enum que representa os tipos de pagamento (feito para conversar com o backend .NET)
+// Reutilizando o enum PaymentType da tela de nova despesa
 enum PaymentType {
   cash(0, 'Dinheiro', Icons.money_rounded),
   creditCard(1, 'Cartão de Crédito', Icons.credit_card),
   debitCard(2, 'Cartão de Débito', Icons.credit_card),
   electronicTransfer(3, 'Transferência', Icons.send);
 
-  final int value; // Valor numérico p/ consumo pela API
+  final int value;
   final String description;
   final IconData icon;
 
   const PaymentType(this.value, this.description, this.icon);
+
+  // Método para converter valor numérico em enum
+  static PaymentType? fromValue(int value) {
+    try {
+      return PaymentType.values.firstWhere((type) => type.value == value);
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
-class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
+class _CashFlowEditExpenseScreenState extends State<CashFlowEditExpenseScreen> {
   // Chave para controle e validação do formulário
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
@@ -45,12 +59,43 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
   PaymentType? _selectedPaymentType;
   
   @override
+  void initState() {
+    super.initState();
+    _loadExpenseData(); // Carrega os dados da despesa quando o widget é inicializado
+  }
+
+  @override
   void dispose() {
-    // Limpeza dos controllers -> evitar vazamentos de memória
+    // Limpeza dos controllers
     _titleController.dispose();
     _descriptionController.dispose();
     _valueController.dispose();
     super.dispose();
+  }
+
+  // Método para carregar os dados da despesa (simulado)
+  void _loadExpenseData() {
+    // ToDo: Substituir por chamada à API para buscar os dados da despesa com widget.expenseId
+    
+    // Dados simulados -> buscar da API depois
+    final expenseData = {
+      'title': 'iPhone',
+      'description': 'Compra do novo iPhone 15',
+      'amount': '5999.00', 
+      'paymentType': 1, 
+    };
+
+    // Preenche os campos com os dados existentes (acima)
+    _titleController.text = (expenseData['title'] as String?) ?? '';
+    _descriptionController.text = (expenseData['description'] as String?) ?? '';
+    _valueController.text = (expenseData['amount'] as String?) ?? '';
+    
+    // Converte o valor numérico para o enum correspondente
+    if (expenseData['paymentType'] != null) {
+      setState(() {
+        _selectedPaymentType = PaymentType.fromValue(expenseData['paymentType'] as int);
+      });
+    }
   }
 
   @override
@@ -58,11 +103,11 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final appBarTheme = TAppBarTheme.lightAppBarTheme;
-    
+
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove a seta de voltar (padrão)
+        automaticallyImplyLeading: false,
         centerTitle: appBarTheme.centerTitle,
         backgroundColor: appBarTheme.backgroundColor,
         elevation: appBarTheme.elevation,
@@ -78,7 +123,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.account_circle, color: Colors.white),
-            onPressed: () {}, // ToDo -> implementar navegação para tela de perfil (alterar e-mail e/ou senha)
+            onPressed: () {}, // ToDo: implementar navegação para tela de perfil
           ),
         ],
       ),
@@ -89,9 +134,9 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              child: TextButton(
+              child: TextButton( // Botão "voltar"
                 onPressed: () {
-                  context.pop(); // Navegação -> Go Router
+                  context.pop(); // Volta para a tela anterior
                 },
                 child: Text(
                   "Voltar",
@@ -106,7 +151,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
             const SizedBox(height: CashFlowSizes.xsmallPadding),
 
             Text(
-              "Adicionar despesa",
+              "Editar despesa",
               style: textTheme.headlineMedium?.copyWith(
                 color: CashFlowColors.textPrimaryColor,
                 fontWeight: FontWeight.bold
@@ -114,7 +159,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
             ),
 
             Text(
-              "Adicione uma nova despesa",
+              "Edite os dados da despesa",
               style: textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
               ),
@@ -247,9 +292,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                         child: Row(
                           children: [
                             Icon(type.icon, color: CashFlowColors.textSecondaryColor),
-
-                            const SizedBox(height: CashFlowSizes.smallSpacing),
-
+                            const SizedBox(width: 12),
                             Text(type.description,
                               style: const TextStyle(color: CashFlowColors.textSecondaryColor)),
                           ],
@@ -261,7 +304,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                         _selectedPaymentType = newValue;
                       });
                     },
-                    
+
                     validator: (value) {
                       if (value == null) {
                         return "Selecione o tipo de pagamento";
@@ -272,28 +315,29 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
 
                   const SizedBox(height: CashFlowSizes.largeSpacing),
 
-                  // Botão de Salvar
+                  // Botão de Atualizar a despesa selecionada
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           // Formatar os dados para enviar à API
-                          final expenseData = {
+                          final updatedExpenseData = {
+                            'id': widget.expenseId,
                             'title': _titleController.text,
                             'description': _descriptionController.text,
                             'amount': double.parse(_valueController.text),
                             'paymentType': _selectedPaymentType?.value,
-                            'date': DateTime.now().toIso8601String(),
+                            'date': DateTime.now().toIso8601String(), // Ou manter a data original (?)
                           };
                           
                           // Print para simulação da resposta 
-                          // Aqui deve ser chamada a API no futuro
-                          print('Dados da despesa: $expenseData');
+                          // Aqui deve ser chamada a API 
+                          print('Dados atualizados da despesa: $updatedExpenseData');
                           
                           // Feedback (erro ou sucesso) e voltar p/ home
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Despesa adicionada com sucesso!')),
+                            const SnackBar(content: Text('Despesa atualizada com sucesso!')),
                           );
                           context.go('/expenses'); // Navegação -> Go Router
                         }
@@ -305,7 +349,7 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text("Salvar Despesa"),
+                      child: const Text("Atualizar Despesa"),
                     ),
                   ),
                 ],

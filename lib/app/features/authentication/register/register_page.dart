@@ -50,21 +50,19 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
   // Método principal de construção da interface
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final appBarTheme = TAppBarTheme.lightAppBarTheme;
+
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove a seta de voltar (padrão)
+      appBar: AppBar( // Barra superior do app
+        backgroundColor: appBarTheme.backgroundColor,
         centerTitle: true,
-        title: const Text(
-          "CashFlow",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: CashFlowColors.textWhiteColor,
-          ),
+        automaticallyImplyLeading: false,
+        title: Text(
+          "CashFlow"
         ),
-
-        backgroundColor: CashFlowColors.primaryColor,
-        elevation: 0, // Remove sombra do AppBar
       ),
 
       // Corpo da tela com SingleChildScrollView para rolagem
@@ -73,16 +71,14 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
           horizontal: CashFlowSizes.mediumPadding,
           vertical: CashFlowSizes.largePadding,
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // Título
             Text(
               "Crie sua conta",
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: CashFlowColors.textPrimaryColor,
+              style: textTheme.headlineMedium?.copyWith(
+                color: CashFlowColors.textPrimaryColor
               ),
             ),
 
@@ -91,7 +87,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
             // Subtítulo
             Text(
               "Preencha os campos para criar sua conta",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: textTheme.bodyMedium?.copyWith(
                 color: CashFlowColors.textSecondaryColor,
               ),
             ),
@@ -103,7 +99,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
               key: _formKey, // Chave para controle do formulário
               child: Column(
                 children: [
-
                   // Nome
                   TextFormField(
                     controller: _nameController,
@@ -117,11 +112,9 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -151,11 +144,9 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -184,7 +175,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
-
                       suffixIcon: IconButton( // Botão para alternar visibilidade da senha
                         icon: Icon(
                           _obscurePassword ? Icons.visibility : Icons.visibility_off,
@@ -196,15 +186,12 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                           });
                         },
                       ),
-
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -233,7 +220,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       labelStyle: const TextStyle(color: CashFlowColors.textSecondaryColor),
                       floatingLabelStyle: TextStyle(color: CashFlowColors.textSecondaryColor),
                       prefixIcon: const Icon(Icons.password, color: CashFlowColors.textSecondaryColor),
-
                       suffixIcon: IconButton( // Botão para alternar visibilidade da senha
                         icon: Icon(
                           _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
@@ -245,15 +231,12 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                           });
                         },
                       ),
-
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor),
                       ),
-
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: CashFlowColors.textSecondaryColor, width: 2),
                       ),
@@ -272,7 +255,7 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
 
                   const SizedBox(height: CashFlowSizes.largeSpacing),
 
-                  // Botão de registro
+                  // Botão de "cadastrar"
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -281,7 +264,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                           context.go('/expenses'); // Navegação -> Go Router
                         }
                       },
-
                       style: ElevatedButton.styleFrom(
                         backgroundColor: CashFlowColors.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -289,7 +271,6 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-
                       child: const Text("Cadastrar"),
                     ),
                   ),
@@ -303,13 +284,12 @@ class _CashFlowRegisterScreenState extends State<CashFlowRegisterScreen> {
                       onPressed: () {
                         context.pop(); // Navegação -> Go Router
                       },
-
                       child: Text(
                         "Já é registrado? Faça seu login",
-                        style: TextStyle(
+                        style: textTheme.bodySmall?.copyWith(
                           color: CashFlowColors.primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          fontWeight: FontWeight.bold
+                        )
                       ),
                     ),
                   ),

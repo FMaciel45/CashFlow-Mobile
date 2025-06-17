@@ -21,25 +21,26 @@ class CashFlowExpensesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final appBarTheme = TAppBarTheme.lightAppBarTheme;
+
     return Scaffold(
       backgroundColor: CashFlowColors.primaryBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove a seta de voltar (padrão)
-        centerTitle: false,
+        centerTitle: appBarTheme.centerTitle,
+        backgroundColor: appBarTheme.backgroundColor,
+        elevation: appBarTheme.elevation,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Olá, Felipe",
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: CashFlowColors.textWhiteColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: textTheme.headlineSmall,
             ),
           ],
         ),
-        backgroundColor: CashFlowColors.primaryColor,
-        elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.account_circle, color: Colors.white),
@@ -49,6 +50,7 @@ class CashFlowExpensesScreen extends StatelessWidget {
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(CashFlowSizes.mediumPadding),
         child: Column(
@@ -85,6 +87,8 @@ class BalanceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Container(
@@ -99,27 +103,24 @@ class BalanceSection extends StatelessWidget {
             children: [
               Text(
                 "Seus gastos totais",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: textTheme.bodyMedium?.copyWith(
                   color: CashFlowColors.textSecondaryColor,
                 ),
               ),
-              const SizedBox(height: CashFlowSizes.smallSpacing),
+
+              const SizedBox(height: CashFlowSizes.xsmallSpacing),
+
               Text(
                 "R\$ 2.651,70",
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                style: textTheme.headlineMedium?.copyWith(
                   color: CashFlowColors.textPrimaryColor,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
+
+              TDividerTheme.lightDivider, // Alteração -> divider padronizado na pasta "themes"
+
             ],
           ),
-        ),
-        const Divider(
-          height: 24,
-          thickness: 1,
-          color: CashFlowColors.dividerColor,
-          indent: 16,
-          endIndent: 16,
         ),
       ],
     );
@@ -132,6 +133,8 @@ class ExpensesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: CashFlowSizes.mediumPadding),
@@ -147,14 +150,14 @@ class ExpensesSection extends StatelessWidget {
             children: [
               Text(
                 "Atividades",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: textTheme.titleMedium?.copyWith(
                   color: CashFlowColors.textPrimaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 "R\$ 1.349,48",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: textTheme.titleMedium?.copyWith(
                   color: CashFlowColors.primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -163,7 +166,7 @@ class ExpensesSection extends StatelessWidget {
           ),
           Text(
             "Gastos em Junho",
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: textTheme.bodySmall?.copyWith(
               color: CashFlowColors.textSecondaryColor,
             ),
           ),
@@ -184,15 +187,7 @@ class ExpenseCard extends StatelessWidget {
       'time': '15:30',
       'amount': '- R\$ 5.999,00',
       'icon': Icons.wallet,
-    },
-    {
-      'id': '2',
-      'title': 'Mercado',
-      'date': '18 Mar 2024',
-      'time': '02:15',
-      'amount': '- R\$ 349,48',
-      'icon': Icons.wallet,
-    },
+    }
   ];
 
   ExpenseCard({super.key});
@@ -218,7 +213,7 @@ class ExpenseCard extends StatelessWidget {
   }
 
   void _handleEdit(String id, BuildContext context) { // ToDo -> comunicar com a API para edição
-    context.push('/edit-expense/$id'); // Navega p/ a tela de edição (Go Router)
+    context.push('/edit-expense/$id'); // Navega p/ a tela de edição (Go Router) com o ID da despesa
   }
 }
 
