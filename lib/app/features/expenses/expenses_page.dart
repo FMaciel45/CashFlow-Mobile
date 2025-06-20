@@ -45,7 +45,7 @@ class CashFlowExpensesScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.account_circle, color: Colors.white),
             onPressed: () {
-              // ToDo -> implementar navegação para tela de perfil (alterar e-mail e/ou senha)
+              context.push('/user'); // Navegação para a tela de perfil
             },
           ),
         ],
@@ -199,20 +199,20 @@ class ExpenseCard extends StatelessWidget {
         return TransactionItem(
           transaction,
           key: ValueKey(transaction['id']),
-          onDelete: () => _handleDelete(transaction['id'], context),
-          onEdit: () => _handleEdit(transaction['id'], context),
+          onDelete: () => _handleDeleteExpense(transaction['id'], context),
+          onEdit: () => _handleEditExpense(transaction['id'], context),
         );
       }).toList(),
     );
   }
 
-  void _handleDelete(String id, BuildContext context) { // ToDo -> comunicar com a API p/ deleção
+  void _handleDeleteExpense(String id, BuildContext context) { // ToDo -> comunicar com a API p/ deleção
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Despesa $id será apagada')),
     );
   }
 
-  void _handleEdit(String id, BuildContext context) { // ToDo -> comunicar com a API para edição
+  void _handleEditExpense(String id, BuildContext context) { // ToDo -> comunicar com a API para edição
     context.push('/edit-expense/$id'); // Navega p/ a tela de edição (Go Router) com o ID da despesa
   }
 }

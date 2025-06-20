@@ -120,12 +120,6 @@ class _CashFlowEditExpenseScreenState extends State<CashFlowEditExpenseScreen> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle, color: Colors.white),
-            onPressed: () {}, // ToDo: implementar navegação para tela de perfil
-          ),
-        ],
       ),
 
       body: SingleChildScrollView(

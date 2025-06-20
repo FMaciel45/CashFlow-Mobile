@@ -15,9 +15,6 @@ class CashFlowColors {
   static const Color primaryBackgroundColor = Color.fromARGB(255, 243, 245, 255);
   static const Color secondaryBackgroundColor = Color.fromARGB(255, 234, 237, 245);
 
-  static const Color primaryButtonColor = Color.fromARGB(255, 245, 124, 0);
-  static const Color secondaryButtonColor = Color.fromARGB(255, 196, 196, 196);
-
   static const Color dividerColor = Color.fromRGBO(170, 170, 170, 0.4);
 
   static const Color primaryBorderColor = Color.fromARGB(255, 217, 217, 217);
@@ -25,7 +22,7 @@ class CashFlowColors {
 
   static const Color errorColor = Color.fromARGB(255, 211, 47, 47);
   static const Color successColor = Color.fromARGB(255, 56, 142, 60);
-  static const Color warningColor = Color.fromARGB(255, 245, 124, 0);
+  static const Color warningColor = Color.fromARGB(255, 153, 41, 13);
 } 
 
 class TDividerTheme {

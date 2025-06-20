@@ -1,4 +1,5 @@
 import 'package:cashflow/app/features/expenses/edit_expense_page.dart';
+import 'package:cashflow/app/features/personalization/user_personalization_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cashflow/app/features/authentication/register/register_page.dart';
 import 'package:cashflow/app/features/authentication/login/login_page.dart';
@@ -37,6 +38,11 @@ class AppRouter {
           final expenseId = state.pathParameters['id']!;
           return CashFlowEditExpenseScreen(expenseId: expenseId);
         },
+      ),  
+      GoRoute(  
+        path: '/user',
+        name: 'user-page',
+        builder: (context, state) => const CashFlowUserPersonalizationScreen(),
       ),
     ],
   );

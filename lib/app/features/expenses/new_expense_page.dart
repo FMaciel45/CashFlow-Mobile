@@ -75,12 +75,6 @@ class _CashFlowNewExpenseScreenState extends State<CashFlowNewExpenseScreen> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle, color: Colors.white),
-            onPressed: () {}, // ToDo -> implementar navegação para tela de perfil (alterar e-mail e/ou senha)
-          ),
-        ],
       ),
 
       body: SingleChildScrollView(

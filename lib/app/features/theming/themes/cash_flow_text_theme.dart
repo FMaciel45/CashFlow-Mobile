@@ -17,7 +17,7 @@ class TTextTheme {
       fontWeight: FontWeight.w600, 
       color: Colors.black
     ),
-
+    
     titleLarge: const TextStyle().copyWith(
       fontSize: 16, 
       fontWeight: FontWeight.w600, 

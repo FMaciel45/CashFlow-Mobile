@@ -8,6 +8,10 @@ class CashFlowSizes {
   static const double largePadding = 32;
   static const double xlargePadding = 64;
 
+  static const double profileIconSize = 160;
+
+  
+
   /// Spacings
   static const double xsmallSpacing = 2;
   static const double smallSpacing = 4;
